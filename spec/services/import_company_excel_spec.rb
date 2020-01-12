@@ -10,15 +10,17 @@ RSpec.describe ImportCompanyExcel do
 
       import_excel.execute
       expect(import_excel.errors.count).to eq(0)
+      expect(Company.count).to eq(5)
     end
 
     it "should error import" do
       # falha
-      path = Rails.root.join('spec', 'fixtures', 'empresas-sucesso.xlsx')
+      path = Rails.root.join('spec', 'fixtures', 'empresas-erro.xlsx')
       import_excel = ImportCompanyExcel.new(path)
 
       import_excel.execute
       expect(import_excel.errors.count).to_not eq(0)
+      expect(Company.count).to eq(0)
     end
   end
 
